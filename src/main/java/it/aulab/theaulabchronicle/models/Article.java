@@ -48,4 +48,8 @@ public class Article {
     @ManyToOne
     @JsonIgnoreProperties({"articles"})
     private Category category;
+
+    @OneToOne(mappedBy = "article")
+    @JsonIgnoreProperties({"article"})
+    private Image image;
 }

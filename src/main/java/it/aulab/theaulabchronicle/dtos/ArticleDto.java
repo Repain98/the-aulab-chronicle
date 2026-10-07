@@ -1,6 +1,7 @@
 package it.aulab.theaulabchronicle.dtos;
 
 import it.aulab.theaulabchronicle.models.Category;
+import it.aulab.theaulabchronicle.models.Image;
 import it.aulab.theaulabchronicle.models.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,5 @@ public class ArticleDto {
     private LocalDate publishDate;
     private User user;
     private Category category;
+    private Image image;
 }

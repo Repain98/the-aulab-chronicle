@@ -1,7 +1,9 @@
 package it.aulab.theaulabchronicle.controllers;
 
+import it.aulab.theaulabchronicle.dtos.ArticleDto;
 import it.aulab.theaulabchronicle.dtos.UserDto;
 import it.aulab.theaulabchronicle.models.User;
+import it.aulab.theaulabchronicle.services.ArticleService;
 import it.aulab.theaulabchronicle.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,8 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -21,26 +29,38 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //Rotta di home
+    @Autowired
+    private ArticleService articleService;
+
+    // Rotta di home
     @GetMapping("/")
-    public String home() {
+    public String home(Model viewModel) {
+
+        List<ArticleDto> articles = articleService.readAll();
+
+        Collections.sort(articles, Comparator.comparing(ArticleDto::getPublishDate).reversed());
+
+        List<ArticleDto> lastThreeArticles = articles.stream().limit(3).collect(Collectors.toList());
+
+        viewModel.addAttribute("articles", lastThreeArticles);
+
         return "home";
     }
 
-    //Rotta per la registrazione
+    // Rotta per la registrazione
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new UserDto());
         return "auth/register";
     }
 
-    //Rotta per la login
+    // Rotta per la login
     @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
 
-    //Rotta per il salvataggio della registrazione
+    // Rotta per il salvataggio della registrazione
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
 
@@ -60,5 +80,17 @@ public class UserController {
         redirectAttributes.addFlashAttribute("successMessage", "Registrazione avvenuta!");
 
         return "redirect:/";
+    }
+
+    // Rotta per la ricerca degli articoli in base all'utente
+    @GetMapping("/search/{id}")
+    public String userArticlesSearch(@PathVariable("id") Long id, Model viewModel) {
+        User user = userService.find(id);
+        viewModel.addAttribute("title", "Tutti gli articoli trovati per utente " + user.getUsername());
+
+        List<ArticleDto> articles = articleService.searchByAuthor(user);
+        viewModel.addAttribute("articles", articles);
+
+        return "article/articles";
     }
 }
