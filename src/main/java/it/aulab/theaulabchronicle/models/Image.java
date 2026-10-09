@@ -18,7 +18,7 @@ public class Image {
     private Long id;
     private String path;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "article_id")
     private Article article;
 }

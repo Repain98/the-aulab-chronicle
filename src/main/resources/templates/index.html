@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 
-<!-- Head -->
+<!-- HEAD -->
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<!-- Navbar -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Aulab Chronicle</a>
@@ -32,6 +32,26 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/articles">Tutti gli articoli</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="d-flex">
+                        <a class="nav-link" href="/admin/dashboard">Dashboard admin</a>
+                        <div class="mt-1" th:if="${careerRequests > 0}">
+                            <i class="fas fa-bell fa-1 pt-2"></i>
+                            <span class="badge rounded-pill bg-danger text-white px-1"
+                                  th:text="${careerRequests}"></span>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_REVISOR')">
+                    <div class="d-flex">
+                        <a class="nav-link" href="/revisor/dashboard">Dashboard revisor</a>
+                        <div class="mt-1" th:if="${articlesToBeRevised > 0}">
+                            <i class="fas fa-bell fa-1 pt-2"></i>
+                            <span class="badge rounded-pill bg-danger text-white px-1"
+                                  th:text="${articlesToBeRevised}"></span>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -56,22 +76,22 @@
     </div>
 </nav>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer class="bg-dark text-white pt-4" th:fragment="footer">
     <div class="container">
         <div class="row justify-content-between">
-            <!-- Company Info -->
             <div class="col-md-4 mb-3">
                 <h5><a class="text-white text-decoration-none" href="/">Aulab IT</a></h5>
             </div>
-            <!-- Contact Info -->
+
             <div class="col-md-4 mb-3 text-end">
                 <h5>Lavora con noi</h5>
-                <a class="btn btn-primary" href="#">Richiedi</a>
+                <a class="btn btn-primary" th:href="@{/operations/career/request}">Richiedi</a>
             </div>
         </div>
+
         <div class="text-center py-3 border-top border-secondary">
-            <p class="mb-0">&copy; 2026 Aulab Chronicle. Tutti i diritti riservati.</p>
+            <p class="mb-0">&copy; 2026 The Aulab Chronicle. Tutti i diritti riservati.</p>
         </div>
     </div>
 </footer>

@@ -11,4 +11,10 @@ public interface ArticleRepository extends ListCrudRepository<Article, Long> {
     List<Article> findByCategory(Category category);
 
     List<Article> findByUser(User user);
+
+    List<Article> findByIsAcceptedTrue();
+
+    List<Article> findByIsAcceptedFalse();
+
+    List<Article> findByIsAcceptedIsNull();
 }
