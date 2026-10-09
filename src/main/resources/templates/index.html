@@ -19,15 +19,15 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Aulab Chronicle</a>
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        <a class="navbar-brand" href="/">The Aulab Chronicle</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Attiva/disattiva navigazione"
                 class="navbar-toggler"
                 data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item" sec:authorize="isAuthenticated && hasRole('ROLE_WRITER')">
                     <a class="nav-link" th:href="@{/articles/create}">Crea articolo</a>
                 </li>
                 <li class="nav-item">
@@ -53,6 +53,9 @@
                         </div>
                     </div>
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_WRITER')">
+                    <a class="nav-link" href="/writer/dashboard">Dashboard writer</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                        id="navbarDropdown" role="button">
@@ -75,8 +78,8 @@
         </div>
     </div>
     <form class="d-flex" method="get" th:action="@{/articles/search}">
-        <input aria-label="Search" class="form-control me-2" name="keyword" placeholder="Search" type="search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <input aria-label="Cerca" class="form-control me-2" name="keyword" placeholder="Cerca" type="search">
+        <button class="btn btn-outline-success" type="submit">Cerca</button>
     </form>
 </nav>
 

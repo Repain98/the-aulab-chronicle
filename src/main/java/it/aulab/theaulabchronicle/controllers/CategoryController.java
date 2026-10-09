@@ -49,7 +49,7 @@ public class CategoryController {
     // Rotta per la creazione di una categoria
     @GetMapping("create")
     public String categoryCreate(Model viewModel) {
-        viewModel.addAttribute("title", "Crea un categoria");
+        viewModel.addAttribute("title", "Crea una categoria");
         viewModel.addAttribute("category", new Category());
         return "category/create";
     }
@@ -59,7 +59,7 @@ public class CategoryController {
     public String categoryStore(@Valid @ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirectAttributes, Model viewModel) {
 
         if (result.hasErrors()) {
-            viewModel.addAttribute("title", "Crea un categoria");
+            viewModel.addAttribute("title", "Crea una categoria");
             viewModel.addAttribute("category", category);
             return "category/create";
         }
@@ -73,7 +73,7 @@ public class CategoryController {
     // Rotta per la modifica di una categoria
     @GetMapping("/edit/{id}")
     public String categoryEdit(@PathVariable("id") Long id, Model viewModel) {
-        viewModel.addAttribute("title", "Modifca categoria");
+        viewModel.addAttribute("title", "Modifica categoria");
         viewModel.addAttribute("category", categoryService.read(id));
         return "category/update";
     }
@@ -83,7 +83,7 @@ public class CategoryController {
     public String categoryUpdate(@PathVariable("id") Long id, @Valid @ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirectAttributes, Model viewModel) {
 
         if (result.hasErrors()) {
-            viewModel.addAttribute("title", "Modifca categoria");
+            viewModel.addAttribute("title", "Modifica categoria");
             viewModel.addAttribute("category", category);
             return "category/update";
         }

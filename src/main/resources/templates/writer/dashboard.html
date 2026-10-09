@@ -6,19 +6,19 @@
 <body>
 <head th:insert="~{index :: navbar}"></head>
 
-<div class="vh-100">
-    <div class="alert alert-success" th:if="${resultMessage}">
-        <p th:text="${resultMessage}"></p>
+<div class="min-vh-100">
+    <div class="alert alert-success" th:if="${successMessage}">
+        <p th:text="${successMessage}"></p>
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-12 my-5 d-flex justify-content-center align-items-center">
-                <span class="h1">Dashboard Revisor</span>
+                <span class="h1">Dashboard Writer</span>
             </div>
 
             <div class="col-12 my-5 d-flex justify-content-center align-items-center">
-                <span class="h1" th:text="${title}">Articoli da revisionare</span>
+                <span class="h1" th:text="${title}">I tuoi articoli</span>
             </div>
 
             <div class="col-12">
@@ -29,7 +29,7 @@
                         <th>Title</th>
                         <th>Subtitle</th>
                         <th>Categoria</th>
-                        <th>#Azioni</th>
+                        <th>Azioni</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,8 +40,14 @@
                         <td th:if="${article.category}" th:text="${article.category.name}"></td>
                         <td th:unless="${article.category}">Nessuna categoria</td>
                         <td>
-                            <a class="btn btn-primary m-2" th:href="@{/articles/revisor/detail/{id}(id=${article.id})}">
-                                Leggi
+                            <a class="btn btn-primary m-2" th:href="@{/articles/detail/{id}(id=${article.id})}">
+                                <i class="fa-solid fa-bars"></i>
+                            </a>
+                            <a class="btn btn-warning m-2" th:href="@{/articles/edit/{id}(id=${article.id})}">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a class="btn btn-danger m-2" th:href="@{/articles/delete/{id}(id=${article.id})}">
+                                <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
                     </tr>

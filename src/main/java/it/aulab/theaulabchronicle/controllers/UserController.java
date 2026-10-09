@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -89,7 +90,7 @@ public class UserController {
         User existingUser = userService.findUserByEmail(userDto.getEmail());
 
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
-            result.rejectValue("email", null, "There is already an account registered with the same email");
+            result.rejectValue("email", null, "Esiste già un account registrato con questa email");
         }
 
         if (result.hasErrors()) {
@@ -134,5 +135,18 @@ public class UserController {
         viewModel.addAttribute("title", "Articoli da revisionare");
         viewModel.addAttribute("articles", articleRepository.findByIsAcceptedIsNull());
         return "revisor/dashboard";
+    }
+
+    // Rotta per la dashboard del writer
+    @GetMapping("/writer/dashboard")
+    public String writerDashboard(Model viewModel, Principal principal) {
+
+        viewModel.addAttribute("title", "I tuoi articoli");
+
+        List<ArticleDto> userArticles = articleService.readAll().stream().filter(article -> article.getUser().getEmail().equals(principal.getName())).toList();
+
+        viewModel.addAttribute("articles", userArticles);
+
+        return "writer/dashboard";
     }
 }

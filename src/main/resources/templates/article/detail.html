@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="~{index :: head}"></head>
 
@@ -30,12 +30,12 @@
                 <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#carouselExample"
                         type="button">
                     <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-                    <span class="visually-hidden">Previous</span>
+                    <span class="visually-hidden">Precedente</span>
                 </button>
                 <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#carouselExample"
                         type="button">
                     <span aria-hidden="true" class="carousel-control-next-icon"></span>
-                    <span class="visually-hidden">Next</span>
+                    <span class="visually-hidden">Successivo</span>
                 </button>
             </div>
 
@@ -51,18 +51,18 @@
             <p class="fs-5" th:if="${article.category == null}">Nessuna categoria</p>
 
             <div class="text-muted my-3">
-                <p>Redatto il
-                <p th:text="${article.publishDate}">data</p> da
-                <a class="text-muted" th:href="@{/search/{id}(id=${article.user.id})}">
-                    <p th:text="${article.user.username}">User</p>
-                </a>
+                <p>Redatto il <span th:text="${article.publishDate}">data</span> da
+                    <a class="text-muted" th:href="@{/search/{id}(id=${article.user.id})}">
+                        <span th:text="${article.user.username}">User</span>
+                    </a>
+                </p>
             </div>
         </div>
         <hr>
         <p th:text="${article.body}"></p>
 
         <div class="text-center">
-            <a class="text-secondary pointer" href="#" onclick="goBack()">Torna Indietro</a>
+            <a class="text-secondary pointer" href="#" onclick="goBack()">Torna indietro</a>
         </div>
     </div>
 </div>
